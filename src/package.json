@@ -1,0 +1,19 @@
+{
+  "name": "strife-core",
+  "version": "1.0.0",
+  "description": "A JavaScript game engine.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chrums/strife-core.git"
+  },
+  "author": "Jake Chrumka <chrumka.mj@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Chrums/strife-core/issues"
+  },
+  "homepage": "https://github.com/Chrums/strife-core#readme"
+}
