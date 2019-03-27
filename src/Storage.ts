@@ -1,6 +1,6 @@
-import Component, { Constructor as ComponentConstructor } from '@core/Component';
-import Entity from '@core/Entity';
-import { Id } from '@core/Unique';
+import Component, { Constructor as ComponentConstructor } from './Component';
+import Entity from './Entity';
+import { Id } from './Unique';
 
 export type Constructor<EntityType extends Entity<EntityType>, ComponentType extends Component<EntityType>, StorageType extends IStorage<EntityType, ComponentType>> = new (componentConstructor: ComponentConstructor<any, ComponentType>) => StorageType;
 

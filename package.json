@@ -1,10 +1,11 @@
 {
-  "name": "strife-core",
+  "name": "@fizz6/strife-core",
   "version": "1.0.0",
   "description": "A JavaScript game engine.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/Chrums/strife-core/issues"
   },
-  "homepage": "https://github.com/Chrums/strife-core#readme"
+  "homepage": "https://github.com/Chrums/strife-core#readme",
+  "devDependencies": {
+    "typescript": "^3.3.4000"
+  },
+  "dependencies": {
+    "uuid": "^3.3.2"
+  }
 }

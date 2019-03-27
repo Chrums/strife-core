@@ -1,7 +1,7 @@
-import Component, { Constructor as ComponentConstructor } from '@core/Component';
-import Dispatcher from '@core/Dispatcher';
-import Entity, { Constructor as EntityConstructor } from '@core/Entity';
-import Storage, { Constructor as StorageConstructor, IStorage } from '@core/Storage';
+import Component, { Constructor as ComponentConstructor } from './Component';
+import Dispatcher from './Dispatcher';
+import Entity, { Constructor as EntityConstructor } from './Entity';
+import Storage, { Constructor as StorageConstructor, IStorage } from './Storage';
 
 export default class Scene<EntityType extends Entity<EntityType>, StorageType extends IStorage<EntityType, any>> {
     

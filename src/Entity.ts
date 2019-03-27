@@ -1,6 +1,6 @@
-import Component, { Constructor as ComponentConstructor } from '@core/Component';
-import Scene from '@core/Scene';
-import Unique from '@core/Unique';
+import Component, { Constructor as ComponentConstructor } from './Component';
+import Scene from './Scene';
+import Unique from './Unique';
 
 export type Constructor<EntityType extends Entity<EntityType>> = new (scene: Scene<EntityType, any>) => EntityType;
 

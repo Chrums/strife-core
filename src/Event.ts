@@ -1,4 +1,4 @@
-import Entity from '@core/Entity';
+import Entity from './Entity';
 
 export interface Constructor<EntityType extends Entity<EntityType>, EventType extends Event<EntityType>> {
     new (...args: any[]): EventType;

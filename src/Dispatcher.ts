@@ -1,6 +1,6 @@
-import Delegate from '@core/Delegate';
-import Entity from '@core/Entity';
-import Event, { Constructor as EventConstructor } from '@core/Event';
+import Delegate from './Delegate';
+import Entity from './Entity';
+import Event, { Constructor as EventConstructor } from './Event';
 
 export type Callback<EntityType extends Entity<EntityType>, EventType extends Event<EntityType>> = (event: EventType) => void;
 

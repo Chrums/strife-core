@@ -1,8 +1,8 @@
-import Entity from '@core/Entity';
-import Event, { Constructor as EventConstructor } from '@core/Event';
-import Scene from '@core/Scene';
-import { IStorage } from '@core/Storage';
-import Unique from '@core/Unique';
+import Entity from './Entity';
+import Event, { Constructor as EventConstructor } from './Event';
+import Scene from './Scene';
+import { IStorage } from './Storage';
+import Unique from './Unique';
 
 export type Constructor<EntityType extends Entity<EntityType>, ComponentType extends Component<EntityType>> = new (entity: EntityType) => ComponentType;
 

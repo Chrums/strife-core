@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "experimentalDecorators": true,
+        "module": "es6",
+        "moduleResolution": "node",
+        "outDir": "./dist",
+        "strict": true,
+        "target": "es6",
+    },
+    "paths": {
+        "@root/*": [ "./*" ],
+        "@core/*": [ "./src/*" ],
+    },
+    "include": [ "src" ],
+    "exclude": [ "node_modules" ]
+}
