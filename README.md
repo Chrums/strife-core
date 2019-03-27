@@ -1,1 +1,1 @@
-# strife-core
+# strife

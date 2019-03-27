@@ -1,5 +1,5 @@
 {
-  "name": "@fizz6/strife-core",
+  "name": "@fizz6/strife",
   "version": "1.0.0",
   "description": "A JavaScript game engine.",
   "main": "index.js",
