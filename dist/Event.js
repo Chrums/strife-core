@@ -1,4 +1,6 @@
-export default class Event {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class Event {
     constructor(entity) {
         this.m_entity = entity;
     }
@@ -6,3 +8,4 @@ export default class Event {
         return this.m_entity;
     }
 }
+exports.default = Event;

@@ -1,5 +1,7 @@
-import Unique from './Unique';
-export default class Entity extends Unique {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const Unique_1 = require("./Unique");
+class Entity extends Unique_1.default {
     constructor(scene) {
         super();
         this.m_components = new Components(this);
@@ -12,6 +14,7 @@ export default class Entity extends Unique {
         return this.m_components;
     }
 }
+exports.default = Entity;
 class Components {
     constructor(entity) {
         this.m_entity = entity;

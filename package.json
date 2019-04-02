@@ -1,6 +1,6 @@
 {
   "name": "@fizz6/strife",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A JavaScript game engine.",
   "main": "index.js",
   "scripts": {
@@ -9,15 +9,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Chrums/strife-core.git"
+    "url": "git+https://github.com/fizz6/strife.git"
   },
   "author": "Jake Chrumka <chrumka.mj@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Chrums/strife-core/issues"
+    "url": "https://github.com/fizz6/strife/issues"
   },
-  "homepage": "https://github.com/Chrums/strife-core#readme",
+  "homepage": "https://github.com/fizz6/strife#readme",
   "devDependencies": {
+    "tsconfig-paths": "^3.8.0",
     "typescript": "^3.3.4000"
   },
   "dependencies": {

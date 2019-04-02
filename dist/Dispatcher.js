@@ -1,5 +1,7 @@
-import Delegate from './Delegate';
-export default class Dispatcher {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const Delegate_1 = require("./Delegate");
+class Dispatcher {
     constructor() {
         this.m_callbacks = new Map();
         this.m_events = new Map();
@@ -9,7 +11,7 @@ export default class Dispatcher {
     }
     onByEventTypeAndCallback(eventConstructor, callback) {
         if (!this.m_callbacks.has(eventConstructor))
-            this.m_callbacks.set(eventConstructor, new Delegate());
+            this.m_callbacks.set(eventConstructor, new Delegate_1.default());
         const delegate = this.m_callbacks.get(eventConstructor);
         delegate.on(callback);
     }
@@ -39,3 +41,4 @@ export default class Dispatcher {
             delegate.emit(event);
     }
 }
+exports.default = Dispatcher;

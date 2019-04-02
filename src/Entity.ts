@@ -1,4 +1,5 @@
 import Component, { Constructor as ComponentConstructor } from './Component';
+import { Optional } from './Optional';
 import Scene from './Scene';
 import Unique from './Unique';
 

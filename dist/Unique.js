@@ -1,5 +1,7 @@
-import * as uuidv4 from 'uuid/v4';
-export default class Unique {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const uuidv4 = require("uuid/v4");
+class Unique {
     constructor(id) {
         this.m_id = uuidv4();
         if (typeof id !== 'undefined')
@@ -9,3 +11,4 @@ export default class Unique {
         return this.m_id;
     }
 }
+exports.default = Unique;

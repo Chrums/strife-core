@@ -1,11 +1,13 @@
-import Component from './Component';
-import Dispatcher from './Dispatcher';
-export default class Scene {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const Component_1 = require("./Component");
+const Dispatcher_1 = require("./Dispatcher");
+class Scene {
     constructor(entityConstructor, storageConstructor) {
-        this.m_dispatcher = new Dispatcher();
+        this.m_dispatcher = new Dispatcher_1.default();
         this.m_entities = new Entities(this, entityConstructor);
         this.m_components = new Components(this, storageConstructor);
-        Component.Initialize(this);
+        Component_1.default.Initialize(this);
     }
     get entities() {
         return this.m_entities;
@@ -17,6 +19,7 @@ export default class Scene {
         return this.m_dispatcher;
     }
 }
+exports.default = Scene;
 class Entities {
     constructor(scene, entityConstructor) {
         this.m_scene = scene;

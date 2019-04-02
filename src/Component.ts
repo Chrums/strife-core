@@ -52,7 +52,7 @@ export default class Component<EntityType extends Entity<EntityType>> extends Un
     private static m_componentConstructors: Constructor<any, any>[] = [];
     
     public static On(eventConstructor: EventConstructor<any, any>): (target: any, identifier: string, descriptor: PropertyDescriptor) => void {
-        return (target: any, identifier: string, descriptor: PropertyDescriptor): void => {
+        return (target: any, _identifier: string, descriptor: PropertyDescriptor): void => {
             const componentConstructor = target.constructor as Constructor<any, any>;
             const callbacks = Component.Callbacks.has(componentConstructor)
                 ? Component.Callbacks.get(componentConstructor) as Map<EventConstructor<any, any>, Callback<any, any>>

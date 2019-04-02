@@ -1,4 +1,6 @@
-export default class Delegate {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class Delegate {
     constructor() {
         this.m_callbacks = [];
     }
@@ -9,3 +11,4 @@ export default class Delegate {
         this.m_callbacks.forEach((callback) => callback(trigger));
     }
 }
+exports.default = Delegate;

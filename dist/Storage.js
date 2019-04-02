@@ -1,4 +1,6 @@
-export default class Storage {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class Storage {
     constructor(componentConstructor) {
         this.m_components = new Map();
         this.m_componentConstructor = componentConstructor;
@@ -18,3 +20,4 @@ export default class Storage {
         this.m_components.forEach(callback);
     }
 }
+exports.default = Storage;

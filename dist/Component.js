@@ -1,5 +1,7 @@
-import Unique from './Unique';
-export default class Component extends Unique {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const Unique_1 = require("./Unique");
+class Component extends Unique_1.default {
     constructor(entity) {
         super();
         this.m_entity = entity;
@@ -33,7 +35,7 @@ export default class Component extends Unique {
         return Component.m_componentConstructors;
     }
     static On(eventConstructor) {
-        return (target, identifier, descriptor) => {
+        return (target, _identifier, descriptor) => {
             const componentConstructor = target.constructor;
             const callbacks = Component.Callbacks.has(componentConstructor)
                 ? Component.Callbacks.get(componentConstructor)
@@ -50,3 +52,4 @@ export default class Component extends Unique {
 }
 Component.m_componentConstructors = [];
 Component.m_callbacks = new Map();
+exports.default = Component;
