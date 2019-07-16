@@ -1,7 +1,7 @@
 {
   "name": "@fizz6/strife",
-  "version": "1.0.1",
-  "description": "A JavaScript game engine.",
+  "version": "1.0.3",
+  "description": "Another JavaScript game engine.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -18,8 +18,7 @@
   },
   "homepage": "https://github.com/fizz6/strife#readme",
   "devDependencies": {
-    "tsconfig-paths": "^3.8.0",
-    "typescript": "^3.3.4000"
+    "typescript": "^3.5.3"
   },
   "dependencies": {
     "uuid": "^3.3.2"

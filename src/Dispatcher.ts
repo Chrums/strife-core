@@ -6,43 +6,44 @@ export type Callback<EntityType extends Entity<EntityType>, EventType extends Ev
 
 export default class Dispatcher<EntityType extends Entity<EntityType>> {
     
-    private m_callbacks: Map<EventConstructor<EntityType, any>, Delegate<any>> = new Map();
-    private m_events: Map<number, Event<EntityType>[]> = new Map();
+    private callbacks: Map<EventConstructor<EntityType, any>, Delegate<any>> = new Map();
     
-    public on<EventType extends Event<EntityType>>(eventConstructor: EventConstructor<EntityType, EventType>): (callback: Callback<EntityType, EventType>) => void {
-        return this.onByEventTypeAndCallback.bind(this, eventConstructor) as (callback: Callback<EntityType, EventType>) => void;
+    private events: Map<number, Event<EntityType>[]> = new Map();
+    
+    public On<EventType extends Event<EntityType>>(eventConstructor: EventConstructor<EntityType, EventType>): (callback: Callback<EntityType, EventType>) => void {
+        return this.OnByEventTypeAndCallback.bind(this, eventConstructor) as (callback: Callback<EntityType, EventType>) => void;
     }
     
-    private onByEventTypeAndCallback<EventType extends Event<EntityType>>(eventConstructor: EventConstructor<EntityType, EventType>, callback: Callback<EntityType, EventType>): void {
-        if (!this.m_callbacks.has(eventConstructor)) this.m_callbacks.set(eventConstructor, new Delegate<EventType>());
-        const delegate = this.m_callbacks.get(eventConstructor) as Delegate<EventType>;
-        delegate.on(callback);
+    private OnByEventTypeAndCallback<EventType extends Event<EntityType>>(eventConstructor: EventConstructor<EntityType, EventType>, callback: Callback<EntityType, EventType>): void {
+        if (!this.callbacks.has(eventConstructor)) this.callbacks.set(eventConstructor, new Delegate<EventType>());
+        const delegate = this.callbacks.get(eventConstructor) as Delegate<EventType>;
+        delegate.On(callback);
     }
     
-    public emit<EventType extends Event<EntityType>>(event: EventType): void {
+    public Emit<EventType extends Event<EntityType>>(event: EventType): void {
         const eventConstructor = event.constructor as EventConstructor<EntityType, EventType>;
         const eventPriority = eventConstructor.Priority;
-        if (typeof eventPriority === 'undefined') this.dispatchByEvent(event);
+        if (eventPriority === undefined) this.DispatchByEvent(event);
         else {
-            if (!this.m_events.has(eventPriority)) this.m_events.set(eventPriority, []);
-            const events = this.m_events.get(eventPriority) as Event<EntityType>[];
+            if (!this.events.has(eventPriority)) this.events.set(eventPriority, []);
+            const events = this.events.get(eventPriority) as Event<EntityType>[];
             events.push(event);
         }
     }
     
-    public dispatch(): void {
-        this.m_events.forEach(this.dispatchByEvents.bind(this));
-        this.m_events.clear();
+    public Dispatch(): void {
+        this.events.forEach(this.DispatchByEvents.bind(this));
+        this.events.clear();
     }
     
-    private dispatchByEvents<EventType extends Event<EntityType>>(events: EventType[]): void {
-        events.forEach(this.dispatchByEvent.bind(this));
+    private DispatchByEvents<EventType extends Event<EntityType>>(events: EventType[]): void {
+        events.forEach(this.DispatchByEvent.bind(this));
     }
     
-    private dispatchByEvent<EventType extends Event<EntityType>>(event: EventType): void {
+    private DispatchByEvent<EventType extends Event<EntityType>>(event: EventType): void {
         const eventConstructor = event.constructor as EventConstructor<EntityType, EventType>;
-        const delegate = this.m_callbacks.get(eventConstructor);
-        if (typeof delegate !== 'undefined') delegate.emit(event);
+        const delegate = this.callbacks.get(eventConstructor);
+        if (delegate !== undefined) delegate.Emit(event);
     }
     
 }

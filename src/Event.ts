@@ -8,13 +8,14 @@ export interface Constructor<EntityType extends Entity<EntityType>, EventType ex
 
 export default class Event<EntityType extends Entity<EntityType>> {
     
-    public get entity(): Optional<EntityType> {
-        return this.m_entity;
+    private entity?: EntityType;
+    
+    public get Entity(): Optional<EntityType> {
+        return this.entity;
     }
-    private m_entity?: EntityType;
     
     public constructor(entity?: EntityType) {
-        this.m_entity = entity;
+        this.entity = entity;
     }
     
 }

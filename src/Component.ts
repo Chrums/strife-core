@@ -1,8 +1,7 @@
 import Entity from './Entity';
 import Event, { Constructor as EventConstructor } from './Event';
 import Scene from './Scene';
-import { IStorage } from './Storage';
-import Unique from './Unique';
+import Unique, { Id } from './Unique';
 
 export type Constructor<EntityType extends Entity<EntityType>, ComponentType extends Component<EntityType>> = new (entity: EntityType) => ComponentType;
 
@@ -10,27 +9,41 @@ type Callback<EntityType extends Entity<EntityType>, EventType extends Event<Ent
 
 export default class Component<EntityType extends Entity<EntityType>> extends Unique {
     
-    public static Initialize<EntityType extends Entity<EntityType>, StorageType extends IStorage<EntityType, any>>(scene: Scene<EntityType, StorageType>) {
+    private static componentConstructors: Constructor<any, any>[] = [];
+    
+    public static get Constructors(): Constructor<any, any>[] {
+        return Component.componentConstructors;
+    }
+    
+    private static callbacks: Map<Constructor<any, any>, Map<EventConstructor<any, any>, Callback<any, any>>> = new Map();
+    
+    public static get Callbacks(): Map<Constructor<any, any>, Map<EventConstructor<any, any>, Callback<any, any>>> {
+        return Component.callbacks;
+    }
+    
+    public static Initialize<EntityType extends Entity<EntityType>>(scene: Scene<EntityType>) {
+        
         Component.Constructors.forEach(
             (componentConstructor: Constructor<EntityType, any>): void => {
-                scene.components.register(componentConstructor)
+                scene.Components.Register(componentConstructor)
             }
         );
+        
         Component.Callbacks.forEach(
             (callbacks: Map<EventConstructor<any, any>, Callback<any, any>>, componentConstructor: Constructor<EntityType, any>): void => {
                 callbacks.forEach(
                     (callback: Callback<any, any>, eventConstructor: EventConstructor<any, any>): void => {
-                        scene.dispatcher.on(eventConstructor)(
+                        scene.Dispatcher.On(eventConstructor)(
                             (event: Event<EntityType>): void => {
-                                if (event.entity == undefined) {
-                                    scene.components.all(componentConstructor).forEach(
+                                if (event.Entity === undefined) {
+                                    scene.Components.All(componentConstructor).Each(
                                         (component: Component<EntityType>): void => {
                                             callback.call(component, event);
                                         }
                                     );
                                 } else {
-                                    const component = scene.components.get(componentConstructor)(event.entity);
-                                    if (component != undefined) {
+                                    const component = scene.Components.Get(componentConstructor)(event.Entity);
+                                    if (component !== undefined) {
                                         callback.call(component, event);
                                     }
                                 }
@@ -40,16 +53,12 @@ export default class Component<EntityType extends Entity<EntityType>> extends Un
                 );
             }
         );
+        
     }
     
     public static Register<ComponentType extends Component<any>>(componentConstructor: Constructor<any, ComponentType>): void {
-        Component.m_componentConstructors.push(componentConstructor);
+        Component.componentConstructors.push(componentConstructor);
     }
-    
-    public static get Constructors(): Constructor<any, any>[] {
-        return Component.m_componentConstructors;
-    }
-    private static m_componentConstructors: Constructor<any, any>[] = [];
     
     public static On(eventConstructor: EventConstructor<any, any>): (target: any, identifier: string, descriptor: PropertyDescriptor) => void {
         return (target: any, _identifier: string, descriptor: PropertyDescriptor): void => {
@@ -61,19 +70,15 @@ export default class Component<EntityType extends Entity<EntityType>> extends Un
         };
     }
     
-    public static get Callbacks(): Map<Constructor<any, any>, Map<EventConstructor<any, any>, Callback<any, any>>> {
-        return Component.m_callbacks;
-    }
-    private static m_callbacks: Map<Constructor<any, any>, Map<EventConstructor<any, any>, Callback<any, any>>> = new Map();
+    private entity: EntityType;
 
-    public get entity(): EntityType {
-        return this.m_entity;
+    public get Entity(): EntityType {
+        return this.entity;
     }
-    private m_entity: EntityType;
     
-    public constructor(entity: EntityType) {
-        super();
-        this.m_entity = entity;
+    public constructor(entity: EntityType, id?: Id) {
+        super(id);
+        this.entity = entity;
     }
     
 }
