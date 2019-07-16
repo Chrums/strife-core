@@ -2,69 +2,71 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Component_1 = require("./Component");
 const Dispatcher_1 = require("./Dispatcher");
+const Storage_1 = require("./Storage");
 class Scene {
-    constructor(entityConstructor, storageConstructor) {
-        this.m_dispatcher = new Dispatcher_1.default();
-        this.m_entities = new Entities(this, entityConstructor);
-        this.m_components = new Components(this, storageConstructor);
+    constructor(entityConstructor) {
+        this.components = new Components();
+        this.dispatcher = new Dispatcher_1.default();
+        this.entities = new Entities(this, entityConstructor);
         Component_1.default.Initialize(this);
     }
-    get entities() {
-        return this.m_entities;
+    get Entities() {
+        return this.entities;
     }
-    get components() {
-        return this.m_components;
+    get Components() {
+        return this.components;
     }
-    get dispatcher() {
-        return this.m_dispatcher;
+    get Dispatcher() {
+        return this.dispatcher;
     }
 }
 exports.default = Scene;
 class Entities {
     constructor(scene, entityConstructor) {
-        this.m_scene = scene;
-        this.m_entityConstructor = entityConstructor;
+        this.scene = scene;
+        this.entityConstructor = entityConstructor;
     }
-    add() {
-        return new this.m_entityConstructor(this.m_scene);
+    Add() {
+        return new this.entityConstructor(this.scene);
     }
-    remove() {
+    Remove() {
         // TODO: Implement this...
         return false;
     }
+    Get(id) {
+        return new this.entityConstructor(this.scene, id);
+    }
 }
 class Components {
-    constructor(scene, storageConstructor) {
-        this.m_storages = new Map();
-        this.m_scene = scene;
-        this.m_storageConstructor = storageConstructor;
+    constructor() {
+        this.storages = new Map();
     }
-    register(componentConstructor) {
-        const storage = new this.m_storageConstructor(componentConstructor);
-        this.m_storages.set(componentConstructor, storage);
+    Register(componentConstructor) {
+        const storage = new Storage_1.default(componentConstructor);
+        this.storages.set(componentConstructor, storage);
     }
-    add(componentConstructor) {
-        return this.addByComponentTypeAndEntity.bind(this, componentConstructor);
+    Add(componentConstructor) {
+        return this.AddByComponentTypeAndEntity.bind(this, componentConstructor);
     }
-    addByComponentTypeAndEntity(componentConstructor, entity) {
-        const storage = this.m_storages.get(componentConstructor);
-        return storage.add(entity);
+    AddByComponentTypeAndEntity(componentConstructor, entity) {
+        const storage = this.storages.get(componentConstructor);
+        return storage.Add(entity);
     }
-    remove(componentConstructor) {
-        return this.removeByComponentTypeAndEntity.bind(this, componentConstructor);
+    Remove(componentConstructor) {
+        return this.RemoveByComponentTypeAndEntity.bind(this, componentConstructor);
     }
-    removeByComponentTypeAndEntity(componentConstructor, entity) {
-        const storage = this.m_storages.get(componentConstructor);
-        return storage.remove(entity);
+    RemoveByComponentTypeAndEntity(componentConstructor, entity) {
+        const storage = this.storages.get(componentConstructor);
+        return storage.Remove(entity);
     }
-    get(componentConstructor) {
-        return this.getByComponentTypeAndEntity.bind(this, componentConstructor);
+    Get(componentConstructor) {
+        return this.GetByComponentTypeAndEntity.bind(this, componentConstructor);
     }
-    getByComponentTypeAndEntity(componentConstructor, entity) {
-        const storage = this.m_storages.get(componentConstructor);
-        return storage.get(entity);
+    GetByComponentTypeAndEntity(componentConstructor, entity) {
+        const storage = this.storages.get(componentConstructor);
+        return storage.Get(entity);
     }
-    all(componentConstructor) {
-        return this.m_storages.get(componentConstructor);
+    All(componentConstructor) {
+        return this.storages.get(componentConstructor);
     }
 }

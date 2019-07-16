@@ -2,22 +2,22 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class Storage {
     constructor(componentConstructor) {
-        this.m_components = new Map();
-        this.m_componentConstructor = componentConstructor;
+        this.components = new Map();
+        this.componentConstructor = componentConstructor;
     }
-    add(entity) {
-        const component = new this.m_componentConstructor(entity);
-        this.m_components.set(entity.id, component);
+    Add(entity) {
+        const component = new this.componentConstructor(entity);
+        this.components.set(entity.Id, component);
         return component;
     }
-    remove(entity) {
-        return this.m_components.delete(entity.id);
+    Remove(entity) {
+        return this.components.delete(entity.Id);
     }
-    get(entity) {
-        return this.m_components.get(entity.id);
+    Get(entity) {
+        return this.components.get(entity.Id);
     }
-    forEach(callback) {
-        this.m_components.forEach(callback);
+    Each(callback) {
+        this.components.forEach(callback);
     }
 }
 exports.default = Storage;
