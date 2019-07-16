@@ -1,1 +1,1 @@
-# strife
+# Strife
