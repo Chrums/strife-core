@@ -2,30 +2,30 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Unique_1 = require("./Unique");
 class Entity extends Unique_1.default {
-    constructor(scene, id) {
-        super(id);
-        this.components = new Components(this);
-        this.scene = scene;
+    constructor(scene) {
+        super();
+        this.m_components = new Components(this);
+        this.m_scene = scene;
     }
-    get Scene() {
-        return this.scene;
+    get scene() {
+        return this.m_scene;
     }
-    get Components() {
-        return this.components;
+    get components() {
+        return this.m_components;
     }
 }
 exports.default = Entity;
 class Components {
     constructor(entity) {
-        this.entity = entity;
+        this.m_entity = entity;
     }
     add(componentConstructor) {
-        return this.entity.Scene.Components.Add(componentConstructor)(this.entity);
+        return this.m_entity.scene.components.add(componentConstructor)(this.m_entity);
     }
     remove(componentConstructor) {
-        return this.entity.Scene.Components.Remove(componentConstructor)(this.entity);
+        return this.m_entity.scene.components.remove(componentConstructor)(this.m_entity);
     }
     get(componentConstructor) {
-        return this.entity.Scene.Components.Get(componentConstructor)(this.entity);
+        return this.m_entity.scene.components.get(componentConstructor)(this.m_entity);
     }
 }

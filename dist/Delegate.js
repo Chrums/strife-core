@@ -2,13 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class Delegate {
     constructor() {
-        this.callbacks = [];
+        this.m_callbacks = [];
     }
-    On(callback) {
-        this.callbacks.push(callback);
+    on(callback) {
+        this.m_callbacks.push(callback);
     }
-    Emit(trigger) {
-        this.callbacks.forEach((callback) => callback(trigger));
+    emit(trigger) {
+        this.m_callbacks.forEach((callback) => callback(trigger));
     }
 }
 exports.default = Delegate;

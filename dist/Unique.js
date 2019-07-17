@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const UUId = require("uuid/v4");
+const uuidv4 = require("uuid/v4");
 class Unique {
-    get Id() {
-        return this.id;
-    }
     constructor(id) {
-        this.id = id === undefined
-            ? UUId()
-            : id;
+        this.m_id = uuidv4();
+        if (typeof id !== 'undefined')
+            this.m_id = id;
+    }
+    get id() {
+        return this.m_id;
     }
 }
 exports.default = Unique;

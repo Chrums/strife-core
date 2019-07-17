@@ -3,42 +3,42 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Delegate_1 = require("./Delegate");
 class Dispatcher {
     constructor() {
-        this.callbacks = new Map();
-        this.events = new Map();
+        this.m_callbacks = new Map();
+        this.m_events = new Map();
     }
-    On(eventConstructor) {
-        return this.OnByEventTypeAndCallback.bind(this, eventConstructor);
+    on(eventConstructor) {
+        return this.onByEventTypeAndCallback.bind(this, eventConstructor);
     }
-    OnByEventTypeAndCallback(eventConstructor, callback) {
-        if (!this.callbacks.has(eventConstructor))
-            this.callbacks.set(eventConstructor, new Delegate_1.default());
-        const delegate = this.callbacks.get(eventConstructor);
-        delegate.On(callback);
+    onByEventTypeAndCallback(eventConstructor, callback) {
+        if (!this.m_callbacks.has(eventConstructor))
+            this.m_callbacks.set(eventConstructor, new Delegate_1.default());
+        const delegate = this.m_callbacks.get(eventConstructor);
+        delegate.on(callback);
     }
-    Emit(event) {
+    emit(event) {
         const eventConstructor = event.constructor;
         const eventPriority = eventConstructor.Priority;
-        if (eventPriority === undefined)
-            this.DispatchByEvent(event);
+        if (typeof eventPriority === 'undefined')
+            this.dispatchByEvent(event);
         else {
-            if (!this.events.has(eventPriority))
-                this.events.set(eventPriority, []);
-            const events = this.events.get(eventPriority);
+            if (!this.m_events.has(eventPriority))
+                this.m_events.set(eventPriority, []);
+            const events = this.m_events.get(eventPriority);
             events.push(event);
         }
     }
-    Dispatch() {
-        this.events.forEach(this.DispatchByEvents.bind(this));
-        this.events.clear();
+    dispatch() {
+        this.m_events.forEach(this.dispatchByEvents.bind(this));
+        this.m_events.clear();
     }
-    DispatchByEvents(events) {
-        events.forEach(this.DispatchByEvent.bind(this));
+    dispatchByEvents(events) {
+        events.forEach(this.dispatchByEvent.bind(this));
     }
-    DispatchByEvent(event) {
+    dispatchByEvent(event) {
         const eventConstructor = event.constructor;
-        const delegate = this.callbacks.get(eventConstructor);
-        if (delegate !== undefined)
-            delegate.Emit(event);
+        const delegate = this.m_callbacks.get(eventConstructor);
+        if (typeof delegate !== 'undefined')
+            delegate.emit(event);
     }
 }
 exports.default = Dispatcher;

@@ -2,31 +2,25 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Unique_1 = require("./Unique");
 class Component extends Unique_1.default {
-    constructor(entity, id) {
-        super(id);
-        this.entity = entity;
-    }
-    static get Constructors() {
-        return Component.componentConstructors;
-    }
-    static get Callbacks() {
-        return Component.callbacks;
+    constructor(entity) {
+        super();
+        this.m_entity = entity;
     }
     static Initialize(scene) {
         Component.Constructors.forEach((componentConstructor) => {
-            scene.Components.Register(componentConstructor);
+            scene.components.register(componentConstructor);
         });
         Component.Callbacks.forEach((callbacks, componentConstructor) => {
             callbacks.forEach((callback, eventConstructor) => {
-                scene.Dispatcher.On(eventConstructor)((event) => {
-                    if (event.Entity === undefined) {
-                        scene.Components.All(componentConstructor).Each((component) => {
+                scene.dispatcher.on(eventConstructor)((event) => {
+                    if (event.entity == undefined) {
+                        scene.components.all(componentConstructor).forEach((component) => {
                             callback.call(component, event);
                         });
                     }
                     else {
-                        const component = scene.Components.Get(componentConstructor)(event.Entity);
-                        if (component !== undefined) {
+                        const component = scene.components.get(componentConstructor)(event.entity);
+                        if (component != undefined) {
                             callback.call(component, event);
                         }
                     }
@@ -35,7 +29,10 @@ class Component extends Unique_1.default {
         });
     }
     static Register(componentConstructor) {
-        Component.componentConstructors.push(componentConstructor);
+        Component.m_componentConstructors.push(componentConstructor);
+    }
+    static get Constructors() {
+        return Component.m_componentConstructors;
     }
     static On(eventConstructor) {
         return (target, _identifier, descriptor) => {
@@ -46,10 +43,13 @@ class Component extends Unique_1.default {
             callbacks.set(eventConstructor, descriptor.value);
         };
     }
-    get Entity() {
-        return this.entity;
+    static get Callbacks() {
+        return Component.m_callbacks;
+    }
+    get entity() {
+        return this.m_entity;
     }
 }
-Component.componentConstructors = [];
-Component.callbacks = new Map();
+Component.m_componentConstructors = [];
+Component.m_callbacks = new Map();
 exports.default = Component;
