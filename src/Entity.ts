@@ -1,49 +1,47 @@
 import Component, { Constructor as ComponentConstructor } from './Component';
 import { Optional } from './Optional';
 import Scene from './Scene';
-import Unique, { Id } from './Unique';
+import Unique from './Unique';
 
-export type Constructor<EntityType extends Entity<EntityType>> = new (scene: Scene<EntityType>, id?: Id) => EntityType;
+export type Constructor<EntityType extends Entity<EntityType>> = new (scene: Scene<EntityType, any>) => EntityType;
 
 export default class Entity<EntityType extends Entity<EntityType>> extends Unique {
     
-    private scene: Scene<EntityType>;
-    
-    public get Scene(): Scene<EntityType> {
-        return this.scene;
+    public get scene(): Scene<EntityType, any> {
+        return this.m_scene;
     }
+    private m_scene: Scene<EntityType, any>;
     
-    private components: Components<EntityType> = new Components(this as any);
-    
-    public get Components(): Components<EntityType> {
-        return this.components;
+    public get components(): Components<EntityType> {
+        return this.m_components;
     }
+    private m_components: Components<EntityType> = new Components(this as any);
     
-    public constructor(scene: Scene<EntityType>, id?: Id) {
-        super(id);
-        this.scene = scene;
+    public constructor(scene: Scene<EntityType, any>) {
+        super();
+        this.m_scene = scene;
     }
     
 }
 
 class Components<EntityType extends Entity<EntityType>> {
     
-    private entity: EntityType;
+    private m_entity: EntityType;
     
     public constructor(entity: EntityType) {
-        this.entity = entity;
+        this.m_entity = entity;
     }
     
     public add<ComponentType extends Component<EntityType>>(componentConstructor: ComponentConstructor<EntityType, ComponentType>): ComponentType {
-        return this.entity.Scene.Components.Add(componentConstructor)(this.entity);
+        return this.m_entity.scene.components.add(componentConstructor)(this.m_entity);
     }
     
     public remove<ComponentType extends Component<EntityType>>(componentConstructor: ComponentConstructor<EntityType, ComponentType>): boolean {
-        return this.entity.Scene.Components.Remove(componentConstructor)(this.entity);
+        return this.m_entity.scene.components.remove(componentConstructor)(this.m_entity);
     }
     
     public get<ComponentType extends Component<EntityType>>(componentConstructor: ComponentConstructor<EntityType, ComponentType>): Optional<ComponentType> {
-        return this.entity.Scene.Components.Get(componentConstructor)(this.entity);
+        return this.m_entity.scene.components.get(componentConstructor)(this.m_entity);
     }
     
 }

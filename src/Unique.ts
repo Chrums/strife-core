@@ -1,21 +1,17 @@
-import * as UUId from 'uuid/v4';
+import * as uuidv4 from 'uuid/v4';
 
 export type Id = string;
-
-export type Constructor<UniqueType extends Unique> = new (id?: Id) => UniqueType;
+export type Constructor<U extends Unique> = new (id?: Id) => U;
 
 export default class Unique {
     
-    private id: Id;
-    
-    public get Id(): Id {
-        return this.id;
+    public get id(): Id {
+        return this.m_id;
     }
+    private m_id: Id = uuidv4();
     
     public constructor (id?: Id) {
-        this.id = id === undefined
-            ? UUId()
-            : id;
+        if (typeof id !== 'undefined') this.m_id = id;
     }
     
 }
