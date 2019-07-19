@@ -1,26 +1,38 @@
 import Component, { Constructor as ComponentConstructor } from './Component';
 import { Optional } from './Optional';
 import Scene from './Scene';
-import Unique from './Unique';
+import { Context } from './Serialization';
+import Unique, { Id } from './Unique';
 
-export type Constructor<EntityType extends Entity<EntityType>> = new (scene: Scene<EntityType, any>) => EntityType;
+export type Constructor<EntityType extends Entity<EntityType>> = new (scene: Scene<EntityType, any>, id?: Id) => EntityType;
+
+export type SerializationType = Id;
 
 export default class Entity<EntityType extends Entity<EntityType>> extends Unique {
     
+    private m_scene: Scene<EntityType, any>;
     public get scene(): Scene<EntityType, any> {
         return this.m_scene;
     }
-    private m_scene: Scene<EntityType, any>;
     
+    private m_components: Components<EntityType> = new Components(this as any);
     public get components(): Components<EntityType> {
         return this.m_components;
     }
-    private m_components: Components<EntityType> = new Components(this as any);
     
-    public constructor(scene: Scene<EntityType, any>) {
-        super();
+    public constructor(scene: Scene<EntityType, any>, id?: Id) {
+        super(id);
         this.m_scene = scene;
     }
+    
+    // public serialize(): SerializationType {
+    //     return this.m_id;
+    // }
+    
+    // public deserialize(context: Context<EntityType, SerializationType>): this {
+    //     this.m_id = context.resolve(context.data).m_id;
+    //     return this;
+    // }
     
 }
 

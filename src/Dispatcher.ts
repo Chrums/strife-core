@@ -7,6 +7,7 @@ export type Callback<EntityType extends Entity<EntityType>, EventType extends Ev
 export default class Dispatcher<EntityType extends Entity<EntityType>> {
     
     private m_callbacks: Map<EventConstructor<EntityType, any>, Delegate<any>> = new Map();
+    
     private m_events: Map<number, Event<EntityType>[]> = new Map();
     
     public on<EventType extends Event<EntityType>>(eventConstructor: EventConstructor<EntityType, EventType>): (callback: Callback<EntityType, EventType>) => void {
