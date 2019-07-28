@@ -1,1 +1,1 @@
-# Strife
+# Strife — Serialization
