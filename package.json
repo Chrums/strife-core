@@ -24,5 +24,6 @@
   "dependencies": {
     "@types/uuid": "^3.4.5",
     "uuid": "^3.3.2"
-  }
+  },
+  "types": "index.ts"
 }
